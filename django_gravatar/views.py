@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.models import User
 
 from django_gravatar.forms import LoginForm
 
@@ -19,9 +20,9 @@ def LoginView(request):
             return render(request, 'django_gravatar/login.html', context)
         login(request, user)
         return redirect('django_gravatar:homepage')
-    return render(request, 'django_gravatar/login.html', context)
+    return render(request, 'login.html', context)
 
 
-
+@login_required
 def IndexView(request):
-    return render(request,'django_gravatar/index.html')
+    return render(request,'index.html')
