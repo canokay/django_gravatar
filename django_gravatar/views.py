@@ -29,12 +29,14 @@ def LoginView(request):
 def mailMD5(email):
     return hashlib.md5(email.strip().lower().encode("utf-8")).hexdigest()
 
+def get_gravatar_url(email,size):
+    default = "mp" # default photo image url (.jpg or .png) or Gravatar defaults= mp, identicon, monsterid, wavatar, retro, robohash, blank 
+    return "https://www.gravatar.com/avatar/" + mailMD5(email) + "?s="+ str(size) +"&d="+ default
+
 
 @login_required
 def IndexView(request):
-    size = 500
-    gravatar_mail = mailMD5(request.user.email) 
-    gravatar_url = "https://www.gravatar.com/avatar/" + gravatar_mail + "?size="+str(size)
+    gravatar_url = get_gravatar_url(request.user.email,200) 
     
     context={
         "gravatar_url": gravatar_url
